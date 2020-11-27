@@ -1,0 +1,19 @@
+{
+  "name": "vora-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "cors": "^2.8.5",
+    "express": "~4.13.1",
+    "msnodesqlv8": "^2.0.5",
+    "mssql": "^6.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
