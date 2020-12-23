@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var MWorks = require('./workspace.model');
+var MWorkspace = require('./workspace.model');
 
 
 

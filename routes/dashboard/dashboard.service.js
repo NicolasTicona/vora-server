@@ -2,11 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Mdash = require('./dashboard.model');
 
-// router.use('**', async function(req, res, next){
-//     next();
-// });
-
-/* GET users listing. */
 router.get('/getDashboardInfo', async function(req, res, next) {
     try{
         let team_id = req.query.team_id;
@@ -79,6 +74,34 @@ router.post('/updateTask', async function(req, res, next){
         })
     }
 })
+
+router.post('/deleteTask', async function(req, res, next){
+    try{
+
+        let taskData = req.body;
+
+        console.log("HOLLAAA")
+
+        let response = await Mdash.deleteTask(taskData.task_id);
+
+        if(response?.code || response instanceof Error){
+            throw String(response);
+        }
+
+        res.status(200).json({
+            status: 200,
+            response
+        });
+    }catch(err){
+        console.log(err);
+
+        res.status(500).json({
+            status: 500,
+            err
+        })
+    }
+})
+
 
 
 module.exports = router;

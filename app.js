@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 
 var dashboard = require('./routes/dashboard/dashboard.service');
 var workspace = require('./routes/workspace/workspace.service');
+var home = require('./routes/home/home.service');
 var users = require('./routes/users/users.service');
 
 var app = express();
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 app.use('/api/dashboard', cors(), dashboard);
 app.use('/api/workspace', cors(), workspace);
+app.use('/api/home', cors(), home);
 app.use('/api/users', cors(), users);
 
 module.exports = app;

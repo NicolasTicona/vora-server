@@ -1,6 +1,20 @@
 let {pool} =  require('../../connection');
 const sql = require('mssql/msnodesqlv8');
-const { urlencoded } = require('body-parser');
+
+async function getCollaborators(){
+    try{
+        let cn = await pool;
+        let request = cn.request();
+    
+        const response = await request.execute('usp_ListCollaborators');
+    
+        return {
+            collaborators: response.recordset
+        }
+    }catch(err){
+        return err;
+    }
+}
 
 async function getUsersInTeam(team_id){
     
@@ -15,7 +29,7 @@ async function getUsersInTeam(team_id){
             users: usersResponse.recordset
         }
     }catch(err){
-        err
+        return err
     }
 }
 
@@ -31,7 +45,7 @@ async function getUsersInTask(task_id) {
             users: usersResponse.recordset
         }
     }catch(err){
-        err
+        return err
     }
 }
 
@@ -48,7 +62,27 @@ async function removeUserFromTask(task_id, user_id){
             message: usersResponse.recordset[0].statusMessage
         }
     }catch(err){
-        err
+        return err
+    }
+}
+
+async function userLogIn(email, password){
+    try{
+        let cn = await pool;
+        let request = cn.request();
+
+        console.log(email, password)
+    
+        request.input('vemail', sql.VarChar, email);
+        request.input('vpassword', sql.VarChar, password);
+        const usersResponse = await request.execute('usp_UserLogin');
+
+        return {
+            user: usersResponse.recordset[0]
+        }
+    }catch(err){
+        console.log(err);
+       return err
     }
 }
 
@@ -56,5 +90,7 @@ async function removeUserFromTask(task_id, user_id){
 module.exports = {
     getUsersInTeam,
     getUsersInTask,
-    removeUserFromTask
+    removeUserFromTask,
+    userLogIn,
+    getCollaborators
 }

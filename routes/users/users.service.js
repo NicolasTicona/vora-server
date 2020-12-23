@@ -2,6 +2,26 @@ var express = require('express');
 var router = express.Router();
 var MUsers = require('./users.model');
 
+router.get('/getCollaborators', async function(req, res, next) {
+    try{
+        let response = await MUsers.getCollaborators();
+
+        if(response?.code || response instanceof Error){
+            throw String(response);
+        }
+
+        res.status(200).json({
+            status: 200,
+            response
+        });
+    }catch(err){
+        res.status(500).json({
+            status: 500,
+            err
+        })
+    }
+});
+
 router.get('/getUsersInTeam', async function(req, res, next) {
     try{
         let team_id = req.query.team_id;
@@ -67,6 +87,45 @@ router.post('/removeUserFromTask', async function(req, res, next){
             err
         })
     }
+})
+
+router.post('/login', async function(req, res){
+    try{
+        let email = req.body.email;
+        let password = req.body.password;
+
+        console.log(email)
+        console.log(password)
+
+        let response = await MUsers.userLogIn(email, password);
+
+        if(response?.code || response instanceof Error){
+            throw String(response);
+        }
+
+        if(response.user.teams){
+            response.user.teams = response.user.teams.split(',');
+        }else{
+            response.user.teams = [];
+        }
+
+        res.status(200).json({
+            status: 200,
+            response
+        });
+    }catch(err){
+        res.status(500).json({
+            status: 500,
+            err
+        })
+    }
+} )
+
+
+router.get('/prueba', async function(req, res, next){
+    res.json({
+        message: 'hola'
+    })
 })
 
 

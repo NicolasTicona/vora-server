@@ -35,7 +35,7 @@ async function createTask(data){
             udtUserList.rows.add(c.user_id, '0');
         }
 
-        request.input('vteam_id', sql.Int, 4);
+        request.input('vteam_id', sql.Int, data.team_id);
         request.input('vname', sql.NVarChar, data.name);
         request.input('vfinish_at', sql.DateTime, data.finish_at);
         request.input('vdescription', sql.NVarChar, data.description);
@@ -79,8 +79,23 @@ async function updateTask(data){
     const response = await request.execute('usp_UpdateTask');
         
     return response.recordset[0];
-
 }
+
+async function deleteTask(task_id){
+    let cn = await pool;
+    let request = cn.request();
+
+    request.input('vtask_id', sql.Int, task_id);
+
+    console.log("isadjsiad", task_id);
+
+    const response = await request.execute('usp_DeleteTask');
+
+    console.log(response);
+
+    return response.recordset[0];
+}
+
 
 async function getTasks(cn, team_id){
     let request = cn.request();
@@ -112,5 +127,6 @@ async function getTeamInfo(cn, team_id){
 module.exports = {
     getDashboardInfo,
     createTask,
-    updateTask
+    updateTask,
+    deleteTask
 }
