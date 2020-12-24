@@ -2,4 +2,4 @@ unixodbc
 unixodbc-dev
 python-pyodbc
 libsqliteodbc
-g++
+libpq-dev
