@@ -3,3 +3,6 @@ unixodbc-dev
 python-pyodbc
 libsqliteodbc
 libpq-dev
+unixodbc 
+unixodbc-dev
+g++
