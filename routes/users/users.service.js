@@ -124,7 +124,7 @@ router.post('/login', async function(req, res){
 
 router.get('/prueba', async function(req, res, next){
     res.json({
-        message: 'hola'
+        message: 'hola mundo'
     })
 })
 
