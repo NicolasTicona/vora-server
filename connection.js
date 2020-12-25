@@ -6,7 +6,7 @@ async function connectMssql(){
             server: 'localhost',
             port: 1433,
             database: 'vora',
-            driver: 'msnodesqlv8',
+            driver: 'ODBC Driver 13 for SQL Server',
             options: {
                 trustedConnection: true
             } 
