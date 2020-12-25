@@ -7,3 +7,5 @@ g++
 msodbcsql17
 msnodesqlv8 
 libodbc1
+libsqliteodbc
+https://packages.microsoft.com/ubuntu/16.04/prod/pool/main/m/msodbcsql/msodbcsql_13.1.9.2-1_amd64.deb
