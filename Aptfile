@@ -1,9 +1,9 @@
-unixodbc
-unixodbc-dev
 python-pyodbc
 libsqliteodbc
 libpq-dev
 unixodbc 
 unixodbc-dev
 g++
-msodbcsql
+msodbcsql17
+msnodesqlv8 
+libodbc1
