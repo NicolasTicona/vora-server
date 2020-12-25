@@ -6,3 +6,4 @@ libpq-dev
 unixodbc 
 unixodbc-dev
 g++
+msodbcsql
