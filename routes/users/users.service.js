@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var MUsers = require('./users.model');
+let {_IsNull} = require('../../helper')
+
 
 router.get('/getCollaborators', async function(req, res, next) {
     try{
@@ -108,6 +110,39 @@ router.post('/login', async function(req, res){
         }else{
             response.user.teams = [];
         }
+
+        res.status(200).json({
+            status: 200,
+            response
+        });
+    }catch(err){
+        res.status(500).json({
+            status: 500,
+            err
+        })
+    }
+} )
+
+
+router.post('/signup', async function(req, res){
+    try{
+        let email = req.body.email,
+        password = req.body.password,
+        name = req.body.name,
+        patsurname = req.body.patsurname,
+        matsurname = req.body.matsurname;
+
+        if(_IsNull(email, password, name, patsurname, matsurname)){
+            throw Error("Todos los campos son requeridos");
+        }
+
+        let response = await MUsers.userSignUp(name, patsurname, matsurname, email, password);
+
+        if(response?.code || response instanceof Error){
+            throw String(response);
+        }
+
+        response.user.teams = [];
 
         res.status(200).json({
             status: 200,

@@ -1,6 +1,7 @@
 let {pool} =  require('../../connection');
 const sql = require('mssql/msnodesqlv8');
 
+
 async function getCollaborators(){
     try{
         let cn = await pool;
@@ -86,11 +87,33 @@ async function userLogIn(email, password){
     }
 }
 
+async function userSignUp(name, patsurname, matsurname, email, password){
+    try{
+        let cn = await pool;
+        let request = cn.request();
+
+        request.input('vname', sql.VarChar, name);
+        request.input('vpatsurname', sql.VarChar, patsurname);
+        request.input('vmatsurname', sql.VarChar, matsurname);
+        request.input('vemail', sql.VarChar, email);
+        request.input('vpassword', sql.VarChar, password);
+        const usersResponse = await request.execute('usp_UserSignup');
+
+        return {
+            user: usersResponse.recordset[0]
+        }
+    }catch(err){
+        console.log(err);
+       return err
+    }
+}
+
 
 module.exports = {
     getUsersInTeam,
     getUsersInTask,
     removeUserFromTask,
     userLogIn,
-    getCollaborators
+    getCollaborators,
+    userSignUp
 }
