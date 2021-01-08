@@ -51,12 +51,17 @@ async function createTeam(data){
         udtUserList.columns.add('creator', sql.Char(1));
 
         for(let c of data.collaborators){
-            udtUserList.rows.add(c, '0');
+
+            if(c === data.creator_id){
+                udtUserList.rows.add(c, '1');
+            }else{
+                udtUserList.rows.add(c, '0');
+            }
+
         }
 
         request.input('vname', sql.NVarChar, data.name);
         request.input('vuser_list', udtUserList);
-
 
         const response = await request.execute('usp_CreateTeam');
         
