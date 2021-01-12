@@ -1,0 +1,31 @@
+ALTER TABLE Tasks ADD creator INT DEFAULT 2
+GO
+UPDATE Tasks set creator = 2 
+GO
+USE [vora]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_CreateTask]    Script Date: 8/01/2021 19:32:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[usp_CreateTask]
+	@vteam_id INT, 
+	@vname VARCHAR(500),
+	@vfinish_at DATETIME,
+	@vdescription VARCHAR(500),
+	@vstate CHAR(1),
+	@vcreator_id INT,
+	@vuser_list udt_createTaskWithUsers READONLY
+AS 
+
+	DECLARE @lastTaskID INT;
+	INSERT INTO Tasks VALUES (@vname, GETDATE(), @vfinish_at, @vdescription, @vstate, @vteam_id, @vcreator_id);
+	
+	SELECT @lastTaskID = @@IDENTITY;
+
+	INSERT INTO Users_Tasks	SELECT user_id, @lastTaskID, creator FROM @vuser_list;
+
+	SELECT 'Se creó la tarea con éxito ' AS statusMessage, @lastTaskID AS taskID;
+GO

@@ -55,8 +55,8 @@ async function createTeam(data){
         }
 
         request.input('vname', sql.NVarChar, data.name);
+        request.input('vcreator_id', sql.Int, data.creator_id);
         request.input('vuser_list', udtUserList);
-
 
         const response = await request.execute('usp_CreateTeam');
         

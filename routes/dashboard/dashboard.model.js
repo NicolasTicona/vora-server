@@ -40,6 +40,7 @@ async function createTask(data){
         request.input('vfinish_at', sql.DateTime, data.finish_at);
         request.input('vdescription', sql.NVarChar, data.description);
         request.input('vstate', sql.Char, '0');
+        request.input('vcreator_id', sql.Int, data.creator_id);
         request.input('vuser_list', udtUserList);
 
 
